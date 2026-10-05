@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "placeholder-example",
+  "name": "PLACEHOLDER — sample data, not a real layout",
+  "source": "imported",
+  "verified": false,
+  "placeholder": true,
+  "physicalKeyboard": "mac-iso-de",
+  "direction": "ltr",
+  "capturedAt": "",
+  "layers": {
+    "base": {
+      "KeyA": { "key": "PH" },
+      "KeyS": { "key": "PH" },
+      "Backquote": { "key": "Dead", "dead": true },
+      "Space": { "key": " " }
+    },
+    "shift": {
+      "KeyA": { "key": "PH" }
+    },
+    "option": {
+      "Space": { "key": " " }
+    }
+  },
+  "layoutMapSnapshot": null
+}

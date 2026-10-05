@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac Keyboard Viewer</title>
+  <link rel="stylesheet" href="sidepanel.css">
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="row">
+      <select id="layout-select" aria-label="Active layout"></select>
+      <span id="detect-chip" class="chip" hidden></span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-view="viewer" aria-selected="true">Viewer</button>
+      <button role="tab" data-view="capture">Capture</button>
+      <button role="tab" data-view="manage">Layouts</button>
+    </nav>
+  </header>
+
+  <div id="focus-banner" class="banner" hidden>Click inside this panel so it can see your keypresses.</div>
+
+  <!-- Viewer -->
+  <section id="view-viewer" class="view">
+    <div id="placeholder-banner" class="banner warn" hidden>
+      This layout is marked as <b>placeholder</b> sample data — not a real keyboard layout.
+    </div>
+    <div class="layerbar" role="group" aria-label="Displayed layer">
+      <span id="layer-name" class="layer-name">Base</span>
+      <button id="latch-shift" class="toggle" aria-pressed="false" title="Lock Shift layer">⇧ Shift</button>
+      <button id="latch-alt" class="toggle" aria-pressed="false" title="Lock Option layer">⌥ Option</button>
+    </div>
+    <div id="viewer-kb" class="kb-host"></div>
+    <p id="viewer-empty" class="empty" hidden>
+      No layout yet. Open <b>Capture</b> to record the layout that is active on your Mac,
+      or import a JSON file under <b>Layouts</b>.
+    </p>
+    <p class="hint">Hold Shift / Option while this panel is focused to switch layers. Pressed keys light up.</p>
+  </section>
+
+  <!-- Capture -->
+  <section id="view-capture" class="view" hidden>
+    <form id="capture-start" class="card">
+      <h2>New capture</h2>
+      <p>Switch your Mac to the layout you want to record (input menu in the menu bar), then name it here.</p>
+      <label>Layout name <input id="capture-name" required maxlength="80" placeholder="e.g. Arabic"></label>
+      <button type="submit" class="primary">Start capture</button>
+    </form>
+
+    <div id="capture-run" hidden>
+      <div id="capture-layers" class="layer-tabs" role="tablist"></div>
+      <p id="capture-instruction" class="instruction"></p>
+      <div id="capture-kb" class="kb-host"></div>
+      <p id="capture-msg" class="msg" role="status" aria-live="polite"></p>
+      <div id="capture-actions" class="actions">
+        <button id="capture-skip-key" type="button" title="Mark the highlighted key as producing no character">Skip key</button>
+        <button id="capture-swap" type="button" class="warn" hidden>Enable ISO key swap</button>
+        <label class="inline"><input id="capture-shiftopt" type="checkbox" checked> Capture Shift+Option layer</label>
+      </div>
+      <form id="capture-finish" class="card">
+        <label class="inline"><input id="capture-verified" type="checkbox"> I checked every key — mark as verified</label>
+        <div class="actions">
+          <button type="submit" class="primary" id="capture-save">Save layout</button>
+          <button type="button" id="capture-discard" class="danger">Discard</button>
+        </div>
+      </form>
+      <p class="hint">Click any key to re-capture it. Esc cancels. Dead keys are stored as “Dead”.</p>
+    </div>
+  </section>
+
+  <!-- Manage -->
+  <section id="view-manage" class="view" hidden>
+    <div class="actions">
+      <button id="import-btn" type="button" class="primary">Import JSON…</button>
+      <input id="import-file" type="file" accept="application/json,.json" hidden>
+    </div>
+    <p id="manage-msg" class="msg" role="status" aria-live="polite"></p>
+    <ul id="layout-list" class="list"></ul>
+
+    <div class="card">
+      <h2>Settings</h2>
+      <label class="inline"><input id="set-autodetect" type="checkbox"> Auto-detect active layout</label>
+      <label class="inline"><input id="set-swap" type="checkbox"> <span>Swap <code>Backquote</code> ↔ <code>IntlBackslash</code> positions (Chrome ISO quirk)</span></label>
+      <p id="layoutmap-support" class="hint"></p>
+    </div>
+  </section>
+</body>
+</html>
